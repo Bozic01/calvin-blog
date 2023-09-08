@@ -1,0 +1,11 @@
+{{ form_start(form) }}
+<div class="mt-4">
+    {{ form_row(form.title) }}
+</div>
+<div class="mt-4">
+    <button class="btn btn-dark">{{ button_label|default('Save') }}</button>
+    <a href="{{ path('admin_post_category_index') }}" class="btn btn-secondary">
+        Back
+    </a>
+</div>
+{{ form_end(form) }}

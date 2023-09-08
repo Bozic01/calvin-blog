@@ -1,0 +1,17 @@
+{% extends 'base_admin.html.twig' %}
+
+{% block title %}Edit Page{% endblock %}
+
+{% block body %}
+    <h1>Edit Page</h1>
+
+    {{ include('admin/page/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('admin/page/_delete_form.html.twig') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        tinyMCEInit('#page_content')
+    </script>
+{% endblock %}

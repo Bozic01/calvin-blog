@@ -1,0 +1,43 @@
+{% extends 'base_admin.html.twig' %}
+
+{% block title %}Settings{% endblock %}
+
+{% block body %}
+    {% include '_partials/admin/_flash_messages.html.twig' %}
+
+    <div class="d-flex w-100 justify-content-between">
+        <h1>List of settings</h1>
+        <div>
+            <a href="{{ path('settings_new') }}" class="btn btn-dark d-inline-flex">Create</a>
+        </div>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Key</th>
+                <th>Value</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for setting in settings %}
+            <tr>
+                <td>{{ setting.id }}</td>
+                <td>{{ setting.settingKey }}</td>
+                <td>{{ setting.settingValue }}</td>
+                <td>
+                    <a href="{{ path('settings_show', {'id': setting.id}) }}"><i class="bx bx-show"></i></a>
+                    <a href="{{ path('settings_edit', {'id': setting.id}) }}"><i class="bx bx-pencil"></i></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

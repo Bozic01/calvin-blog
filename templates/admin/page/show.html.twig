@@ -1,0 +1,43 @@
+{% extends 'base_admin.html.twig' %}
+
+{% block title %}Page{% endblock %}
+
+{% block body %}
+    <h1>Page</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                {% if (page.featuredImage) %}
+                    <td colspan="2"><img src=" {{ vich_uploader_asset(page ,'imageFile') | imagine_filter('featured_image')}}"></td>
+                {% endif %}
+            </tr>
+
+            <tr>
+                <th>ID</th>
+                <td>{{ page.id }}</td>
+            </tr>
+
+            <tr>
+                <th>Title</th>
+                <td>{{ page.title }}</td>
+            </tr>
+
+            <tr>
+                <th>Content</th>
+                <td>{{ page.content | raw }}</td>
+            </tr>
+
+            <tr>
+                <th>Status</th>
+                <td>{{ page.status }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('admin_page_index') }}" class="btn btn-secondary">Back</a>
+
+    <a href="{{ path('admin_page_edit', {'id': page.id}) }}"class="btn btn-dark">Edit</a>
+
+    {{ include('admin/page/_delete_form.html.twig') }}
+{% endblock %}

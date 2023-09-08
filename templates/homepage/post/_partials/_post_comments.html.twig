@@ -1,0 +1,102 @@
+<div id="comments" class="row">
+    <div class="column large-12">
+        {% set postComments = get_post_comments(post.id) %}
+        <h3>{{ postComments | length }} Comments</h3>
+
+        <!-- START commentlist -->
+        <ol class="commentlist">
+
+            {% for comment in postComments %}
+                {% set commentator = comment.user %}
+                <li class="depth-1 comment">
+
+                    <div class="comment__avatar">
+                        {% if (commentator.photo) %}
+                            <img
+                                    class="avatar"
+                                    src="{{ vich_uploader_asset(commentator,'imageFile') | imagine_filter('featured_image_thumbnail') }}"
+                                    alt="{{ commentator.name }}">
+                        {% else %}
+                            <img
+                                    class="avatar"
+                                    src="{{ asset('public-assets/images/avatars/avatar.png') }}"
+                                    alt="{{ commentator.name }}">
+                        {% endif %}
+                    </div>
+
+                    <div class="comment__content">
+
+                        <div class="comment__info">
+                            <div class="comment__author">(Comment ID: {{ comment.id }}) {{ commentator.name }}</div>
+
+                            <div class="comment__meta">
+
+                                <div class="comment__time">{{ comment.createdAt ? comment.createdAt | date('d-m-Y H:i') : '' }}</div>
+
+                                {% if (app.user) %}
+                                    <div class="comment__reply">
+                                        <a class="comment-reply-link" href="#respond"
+                                           data-comment-id="{{ comment.id }}">Reply</a>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="comment__text">
+                            <p>{{ comment.content }}</p>
+                        </div>
+
+                    </div>
+
+                    <ul class="children">
+                        <li class="depth-2 comment">
+                            {% for childComment in comment.comments %}
+                                {% set commentator = childComment.user %}
+                                <div class="comment__avatar">
+                                    {% if (commentator.photo) %}
+                                        <img
+                                                class="avatar"
+                                                src="{{ vich_uploader_asset(commentator,'imageFile') | imagine_filter('featured_image_thumbnail') }}"
+                                                alt="{{ commentator.name }}">
+                                    {% else %}
+                                        <img
+                                                class="avatar"
+                                                src="{{ asset('public-assets/images/avatars/avatar.png') }}"
+                                                alt="{{ commentator.name }}">
+                                    {% endif %}
+                                </div>
+                                <div class="comment__content">
+
+                                    <div class="comment__info">
+                                        <div class="comment__author">(Comment ID: {{ childComment.id }}) {{ commentator.name }}</div>
+
+                                        <div class="comment__meta">
+
+                                            <div class="comment__time">{{ childComment.createdAt ? childComment.createdAt | date('d-m-Y H:i') : '' }}</div>
+
+{#                                            {% if (app.user) %}#}
+{#                                                <div class="comment__reply">#}
+{#                                                    <a class="comment-reply-link" href="#respond"#}
+{#                                                       data-comment-id="{{ childComment.id }}">Reply</a>#}
+{#                                                </div>#}
+{#                                            {% endif %}#}
+                                        </div>
+                                    </div>
+
+                                    <div class="comment__text">
+                                        <p>{{ childComment.content }}</p>
+                                    </div>
+
+                                </div>
+                            {% endfor %}
+                        </li>
+                    </ul>
+
+                </li> <!-- end comment level 1 -->
+
+            {% endfor %}
+        </ol>
+        <!-- END commentlist -->
+
+    </div> <!-- end col-full -->
+</div> <!-- end comments -->

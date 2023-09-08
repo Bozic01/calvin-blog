@@ -1,0 +1,47 @@
+{% extends 'base_admin.html.twig' %}
+
+{% block title %}PostCategory index{% endblock %}
+
+{% block body %}
+
+    {% include '_partials/admin/_flash_messages.html.twig' %}
+
+    <div class="d-flex w-100 justify-content-between">
+        <h1>Post category list</h1>
+    <div>
+        <a href="{{ path('admin_post_category_new') }}" class="btn btn-dark d-inline-flex">Create</a>
+    </div>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Post count</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for post_category in post_categories %}
+            <tr>
+                <td>{{ post_category.id }}</td>
+                <td>{{ post_category.title }}</td>
+                <td>{{ get_post_count_per_category(post_category.id) }}</td>
+                <td>
+                    <a href="{{ path('admin_post_category_show', {'id': post_category.id}) }}"><i class="bx bx-show"></i></a>
+                    <a href="{{ path('admin_post_category_edit', {'id': post_category.id}) }}"><i class="bx bx-pencil"></i></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="navigation">
+        {{ knp_pagination_render(post_categories) }}
+    </div>
+{% endblock %}

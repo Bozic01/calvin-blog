@@ -1,0 +1,43 @@
+{% extends 'base_admin.html.twig' %}
+
+{% block title %}Hello NewsletterController!{% endblock %}
+
+{% block body %}
+    <div class="d-flex w-100 justify-content-between">
+        <h1>Newsletter</h1>
+    </div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Email</th>
+            <th>Status</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for newsletter in newsletters %}
+            <tr>
+                <td>{{ newsletter.email }}</td>
+                <td>{{ newsletter.status ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('admin_newsletter_enable', {'id': newsletter.id}) }}">
+                        {% if(newsletter.status) %}
+                            Disable
+                        {% else %}
+                            Enable
+                        {% endif %}
+                    </a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="navigation">
+        {{ knp_pagination_render(newsletters) }}
+    </div>
+
+{% endblock %}

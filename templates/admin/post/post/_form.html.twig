@@ -1,0 +1,59 @@
+{{ form_start(form) }}
+<div class="mt-4">
+    {{ form_row(form.title) }}
+</div>
+<div class="mt-4">
+    {{ form_row(form.content) }}
+</div>
+<div class="mt-4">
+    {% if (form.vars.value.id is null) %}
+        {% set options = {'attr': { 'required': 'required' }} %}
+    {% else %}
+        {% set options = {} %}
+    {% endif %}
+    {{ form_row(form.imageFile, options) }}
+</div>
+<div class="mt-4">
+    {{ form_row(form.status) }}
+</div>
+
+<div class="mt-4">
+    {{ form_row(form.isInSlider) }}
+</div>
+
+<div class="mt-4">
+    <label for="" class="d-block">Post categories</label>
+    {% for postCategory in postCategories %}
+        <input
+                type="checkbox"
+                name="categories[{{ postCategory.id }}]"
+                {% if (selectedPostCategoryIds is defined and postCategory.id in selectedPostCategoryIds) %}
+                checked
+                {% endif %}
+                /> {{ postCategory.title }} <br/>
+    {% endfor %}
+</div>
+
+<div class="mt-4">
+    <label for="tags" class="d-block">Post tags</label>
+    <input
+            id="tags"
+            name="tags"
+            class="form-control"
+            autocomplete="off"
+            value="{% if postTagsStrings is defined %}{{ postTagsStrings }}{% endif %}"/>
+</div>
+
+<div class="mt-4">
+    <button
+            class="btn btn-dark">
+        {{ button_label|default('Save') }}
+    </button>
+    <a
+            href="{{ path('admin_post_index') }}"
+            class="btn btn-secondary"
+    >
+        Back
+    </a>
+</div>
+{{ form_end(form) }}

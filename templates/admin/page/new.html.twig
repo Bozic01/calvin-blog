@@ -1,0 +1,17 @@
+{% extends 'base_admin.html.twig' %}
+
+{% block title %}New Page{% endblock %}
+
+{% block body %}
+    <h1>Create new Page</h1>
+
+    {{ include('admin/page/_form.html.twig') }}
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        tinyMCEInit('#page_content')
+    </script>
+{% endblock %}

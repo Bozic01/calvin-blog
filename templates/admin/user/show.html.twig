@@ -1,0 +1,36 @@
+{% extends 'base_admin.html.twig' %}
+
+{% block title %}User{% endblock %}
+
+{% block body %}
+    <h1>User</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>ID</th>
+                <td>{{ user.id }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ user.email }}</td>
+            </tr>
+            <tr>
+                <th>Photo</th>
+                {% if (user.photo) %}
+                    <td colspan="2"><img src=" {{ vich_uploader_asset(user ,'imageFile') | imagine_filter('user_thumb')}}"></td>
+                {% endif %}
+            </tr>
+            <tr>
+                <th>Is Enabled</th>
+                <td>{{ user.isEnabled ? 'Yes' : 'No' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('admin_user_index') }}" class="btn btn-secondary">Back</a>
+
+    <a href="{{ path('admin_user_edit', {'id': user.id}) }}"class="btn btn-dark">Edit</a>
+
+    {{ include('admin/user/_delete_form.html.twig') }}
+{% endblock %}

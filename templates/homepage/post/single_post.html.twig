@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <body id="top" data-aos-easing="ease-in-out" data-aos-duration="800" data-aos-delay="400">
+
+    <!-- preloader
+    ================================================== -->
+    <div id="preloader" style="display: none;">
+        <div id="loader"></div>
+    </div>
+
+    <!-- content
+    ================================================== -->
+
+    <section class="s-content">
+
+        {% include 'homepage/post/_partials/_post_main.html.twig' %}
+
+        <!-- comments
+        ================================================== -->
+        <div class="comments-wrap">
+
+            {% include 'homepage/post/_partials/_post_comments.html.twig' %}
+
+            {% include 'homepage/post/_partials/_post_comment_form.html.twig' %}
+
+        </div> <!-- end comments-wrap -->
+
+    </section> <!-- end s-content -->
+
+    </body>
+
+{% endblock %}

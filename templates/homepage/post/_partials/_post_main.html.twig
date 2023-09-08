@@ -1,0 +1,106 @@
+<div class="row">
+    <div class="column large-12">
+
+        <article class="s-content__entry format-standard">
+
+            <div class="s-content__media">
+                <div class="s-content__post-thumb">
+                    {% if (post.featuredImage) %}
+                        <img src=" {{ vich_uploader_asset(post,'imageFile') | imagine_filter('featured_image') }}"
+                             alt="{{ post.title }}">
+                    {% endif %}
+                </div>
+            </div> <!-- end s-content__media -->
+
+            <div class="s-content__entry-header">
+                <h1 class="s-content__title s-content__title--post">{{ post.title }}</h1>
+            </div> <!-- end s-content__entry-header -->
+
+            <div class="s-content__primary">
+
+                <div class="s-content__entry-content">
+
+                    <p>
+                        {{ post.content | raw }}
+                    </p>
+
+                </div> <!-- end s-entry__entry-content -->
+
+                <div class="s-content__entry-meta">
+                    {% set creator = post.user %}
+
+                    {% if (creator) %}
+                        <div class="entry-author meta-blk">
+                            <div class="author-avatar">
+                                {% if (creator.photo) %}
+                                    <img
+                                            class="avatar"
+                                            src="{{ vich_uploader_asset(creator,'imageFile') | imagine_filter('user_thumb') }}"
+                                            alt="{{ creator.name }}">
+                                {% else %}
+                                    <img
+                                            class="avatar"
+                                            src="{{ asset('public-assets/images/avatars/avatar.png') }}"
+                                            alt="{{ creator.name }}">
+                                {% endif %}
+                            </div>
+                            <div class="byline">
+                                <span class="bytext">Posted By</span>
+                                <span class="author">
+                                            <a href="{{ path('homepage_post_list') ~ '?author-id=' ~ creator.id }}">{{ creator.name }}</a>
+                                        </span>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    <div class="meta-bottom">
+
+                        <div class="entry-cat-links meta-blk">
+                            <div class="cat-links">
+                                <span>In</span>
+                                {% for category in post.postCategoryCategories %}
+                                    <a href="{{ path('homepage_post_list') ~ '?category-id=' ~ category.postCategory.id }}">{{ category.postCategory.title }}</a>
+                                {% endfor %}
+                            </div>
+
+                            <span>On</span>
+                            {{ post.createdAt ? post.createdAt | date('d-m-Y H:i') : '' }}
+                        </div>
+
+                        <div class="entry-tags meta-blk">
+                            <span class="tagtext">Tags</span>
+                            {% for tags in post.postTags %}
+                                <a href="{{ path('homepage_post_list') ~ '?tag=' ~ tags.title}}">{{ tags.title }}</a>
+                            {% endfor %}
+                        </div>
+
+                    </div>
+
+                </div> <!-- s-content__entry-meta -->
+
+                <div class="s-content__pagenav">
+                    {% set prevPost = get_related_post(post.id, '<') %}
+                    {% if (prevPost is not null) %}
+                        <div class="prev-nav">
+                            <a href="{{ path('homepage_post_show', {id: prevPost.id}) }}" rel="prev">
+                                <span>Previous</span>
+                                {{ prevPost.title }}
+                            </a>
+                        </div>
+                    {% endif %}
+                    {% set nextPost = get_related_post(post.id, '>') %}
+                    {% if (nextPost is not null) %}
+                        <div class="next-nav">
+                            <a href="{{ path('homepage_post_show', {id: nextPost.id}) }}" rel="next">
+                                <span>Next</span>
+                                {{ nextPost.title }}
+                            </a>
+                        </div>
+                    {% endif %}
+                </div> <!-- end s-content__pagenav -->
+
+            </div> <!-- end s-content__primary -->
+        </article> <!-- end entry -->
+
+    </div> <!-- end column -->
+</div> <!-- end row -->

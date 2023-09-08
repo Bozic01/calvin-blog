@@ -1,0 +1,138 @@
+{% extends 'base_admin.html.twig' %}
+
+{% block body %}
+<div class="col-lg-8">
+    <div class="row">
+
+<div class="col-xxl-4 col-md-6">
+    <div class="card info-card sales-card">
+
+        <div class="card-body">
+            <h5 class="card-title">{{ 'admin.global.page'|trans }} <span>| {{ 'admin.global.count'|trans }}</span></h5>
+
+            <div class="d-flex align-items-center">
+                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                    <i class="bi bi-card-list"></i>
+                </div>
+                <div class="ps-3 w-100">
+                    {% for count in pageCount %}
+                        <div class="my-0 py-0">
+                            <span class="text-muted small pt-2 ps-1 w-75 d-inline-block">{{ count.status }}</span>
+                            <strong class="text-muted small pt-2 ps-1">{{ count.count }}</strong>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+    <div class="col-xxl-4 col-md-6">
+        <div class="card info-card sales-card">
+
+            <div class="card-body">
+                <h5 class="card-title">{{ 'admin.global.post'|trans }} <span>| {{ 'admin.global.count'|trans }}</span></h5>
+
+                <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                        <i class="bi bi-card-list"></i>
+                    </div>
+                    <div class="ps-3 w-100">
+                        {% for count in postCount %}
+                            <div class="my-0 py-0">
+                                <span class="text-muted small pt-2 ps-1 w-75 d-inline-block" >{{ count.status }}</span>
+                                <strong class="text-muted small pt-2 ps-1">{{ count.count }}</strong>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+        <div class="col-xxl-4 col-md-6">
+            <div class="card info-card sales-card">
+
+                <div class="card-body">
+                    <h5 class="card-title">{{ 'admin.global.user'|trans }} <span>| {{ 'admin.global.count'|trans }}</span></h5>
+
+                    <div class="d-flex align-items-center">
+                        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                            <i class="bi bi-people-fill"></i>
+                        </div>
+                        <div class="ps-3 w-100">
+                            {% for count in userCount %}
+                                <div class="my-0 py-0">
+                                    <span class="text-muted small pt-2 ps-1 w-75 d-inline-block">{{ 'admin.global.total'|trans }}</span>
+                                    <strong class="text-muted small pt-2 ps-1">{{ count.count }}</strong>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-xxl-4 col-md-6">
+            <div class="card info-card sales-card">
+
+                <div class="card-body">
+                    <h5 class="card-title">{{ 'admin.global.comment'|trans }} <span>| {{ 'admin.global.count'|trans }}</span></h5>
+
+                    <div class="d-flex align-items-center">
+                        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                            <i class="bi bi-pencil-fill"></i>
+                        </div>
+                        <div class="ps-3 w-100">
+                            {% for count in commentCount %}
+                                <div class="my-0 py-0">
+                                    <span class="text-muted small pt-2 ps-1 w-75 d-inline-block">{{ 'admin.global.total'|trans }}</span>
+                                    <strong class="text-muted small pt-2 ps-1">{{ count.count }}</strong>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Most viewed posts</h5>
+            <!-- Active Table -->
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Number of views</th>
+                    <th scope="col">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for post in mostViewed %}
+                <tr>
+                    <th scope="row">{{ post.id }}</th>
+                    <td>{{ post.content | slice(0, 50) | raw}}</td>
+                    <td>{{ post.numberOfViews }}</td>
+                    <td>
+                        <a href="{{ path('admin_post_show', {'id': post.id}) }}"><i class="bx bx-show"></i></a>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <!-- End Active Table -->
+
+        </div>
+    </div>
+
+{% endblock %}

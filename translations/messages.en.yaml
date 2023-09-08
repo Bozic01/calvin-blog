@@ -1,0 +1,10 @@
+admin:
+  global:
+    page: Page
+    count: Count
+    post: Post
+    user: User
+    total: Total
+    comment: Comments
+
+homepage:

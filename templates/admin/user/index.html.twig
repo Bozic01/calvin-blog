@@ -1,0 +1,56 @@
+
+{% extends 'base_admin.html.twig' %}
+
+{% block title %}User index{% endblock %}
+
+{% block body %}
+
+    {% include '_partials/admin/_flash_messages.html.twig' %}
+
+    <div class="d-flex w-100 justify-content-between">
+        <h1>List of users</h1>
+        <div>
+            <a href="{{ path('admin_user_new') }}" class="btn btn-dark d-inline-flex">Create</a>
+        </div>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Photo</th>
+                <th>Is Enabled</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.name }}</td>
+                <td>{{ user.email }}</td>
+                <td>
+                    {% if (user.photo) %}
+                        <img src=" {{ vich_uploader_asset(user,'imageFile') | imagine_filter('featured_image_thumbnail')}}">
+                    {% endif %}
+                </td>
+                <td>{{ user.isEnabled ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('admin_user_show', {'id': user.id}) }}"><i class="bx bx-show"></i></a>
+                    <a href="{{ path('admin_user_edit', {'id': user.id}) }}"><i class="bx bx-pencil"></i></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="10">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="navigation">
+        {{ knp_pagination_render(users) }}
+    </div>
+
+{% endblock %}

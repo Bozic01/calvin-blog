@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+
+    <!--- basic page needs
+    ================================================== -->
+    <meta charset="utf-8">
+    <title>{% block title %}Calvin{% endblock %}</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- mobile specific metas
+    ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="{{ asset('public-assets/css/vendor.css') }}">
+    <link rel="stylesheet" href="{{ asset('public-assets/css/styles.css') }}">
+
+    <!-- script
+    ================================================== -->
+    <script src="{{ asset('public-assets/js/modernizr.js') }}"></script>
+    <script defer src="{{ asset('public-assets/js/fontawesome/all.min.js') }}"></script>
+
+    <!-- favicons
+    ================================================== -->
+
+</head>
+
+<body id="top">
+
+{% include '_partials/homepage/_header.html.twig' %}
+
+<div id="preloader">
+    <div id="loader"></div>
+</div>
+
+{% if(app.request.get('_route') == 'homepage' and not app.request.query.get('query')) %}
+    {% include '_partials/homepage/_slider.html.twig' %}
+{% endif %}
+
+<section class="s-content s-content--no-top-padding">
+
+    {% block body %}{% endblock %}
+
+</section>
+
+{% include '_partials/homepage/_footer.html.twig' %}
+
+
+<!-- Java Script
+================================================== -->
+<script src="{{ asset('public-assets/js/jquery-3.5.0.min.js') }}"></script>
+<script src="{{ asset('public-assets/js/plugins.js') }}"></script>
+<script src="{{ asset('public-assets/js/main.js') }}"></script>
+
+<script>
+    // handle comment reply
+    jQuery(document).on('click', '.comment-reply-link', function (e) {
+        const commentId = jQuery(this).data('comment-id');
+        jQuery('#parent-comment-id').val(commentId);
+        jQuery('#respond h3').text(`Replying to comment ID: ${commentId}`);
+    });
+
+    // submit newsletter
+    jQuery(document).on('click', '#subscribe', function (e) {
+        e.preventDefault();
+        const email = jQuery('#email').val().trim();
+
+        jQuery.ajax({
+            type: 'POST',
+            url: "/newsletter",
+            data: JSON.stringify({email: email}),
+            contentType: 'application/json',
+            success: function (response) {
+                jQuery('div.alert-newsletter')
+                    .addClass('alert-box--success')
+                    .removeClass('alert-box--error')
+                    .text(response.message).show();
+            },
+            error: function (xhr, status, error) {
+                jQuery('div.alert-newsletter')
+                    .addClass('alert-box--error')
+                    .removeClass('alert-box--success')
+                    .text(JSON.parse(xhr.responseText).message).show();
+            },
+        })
+    });
+
+
+    // submit contact form
+    jQuery(document).on('click','#submit', function (e) {
+        e.preventDefault();
+        const name = jQuery('#name').val().trim();
+        const email = jQuery('#email').val().trim();
+        const website = jQuery('#website').val().trim();
+        const message = jQuery('#message').val().trim();
+
+        jQuery.ajax({
+            type: 'POST',
+            url: "/new_contact",
+            data: JSON.stringify({name: name,
+                email: email,
+                website: website,
+                message: message
+            }),
+            contentType: 'application/json',
+            success: function (response){
+                jQuery('div.alert-success').addClass('alert-box--error').text(response.message).show();
+            },
+        })
+
+    })
+</script>
+
+</body>
+
+</html>

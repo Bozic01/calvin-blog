@@ -1,0 +1,85 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+{% if (app.request.query.get('query')) %}
+<section class="s-content">
+    {% else %}
+    <section class="s-content s-content--no-top-padding">
+        {% endif %}
+
+        <div class="s-bricks s-bricks--half-top-padding">
+
+            <div class="masonry">
+                <div class="bricks-wrapper h-group">
+
+                    <div class="grid-sizer"></div>
+
+                    <div class="lines">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+
+                    {% for post in posts %}
+                        <article class="brick entry" data-aos="fade-up">
+
+                            <div class="entry__thumb">
+                                <a href="{{ path('homepage_post_show', {'id': post.id}) }}" class="thumb-link">
+                                    {% if (post.featuredImage) %}
+                                        <img src=" {{ vich_uploader_asset(post,'imageFile') | imagine_filter('featured_image_small') }}"
+                                             alt="{{ post.title }}">
+                                    {% endif %}
+                                </a>
+                            </div> <!-- end entry__thumb -->
+                        
+                            <div class="entry__text">
+                                <div class="entry__header">
+                                    <h1 class="entry__title"><a
+                                                href="{{ path('homepage_post_show', {id: post.id}) }}">{{ post.title }}</a>
+                                    </h1>
+
+                                    <div class="entry__meta">
+                                        {% if (post.user) is not null %}
+                                            <span class="byline">By:
+                                            <span class="author">
+                                                <a href="{{ path('homepage_post_list') ~ '?author-id=' ~ post.user.id }}">{{ post.user.name }}</a>
+                                            </span>
+                                            </span>
+                                        {% endif %}
+                                        {% if (post.postCategoryCategories | length > 0) %}
+                                            <span class="cat-links">In:
+                                            {% for category in post.postCategoryCategories %}
+                                                <a href="{{ path('homepage_post_list') ~ '?category-id=' ~ category.postCategory.id }}">{{ category.postCategory.title }}</a>
+                                            {% endfor %}
+                                            </span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="entry__excerpt">
+                                    <p>
+                                        {{ post.content | raw }}
+                                    </p>
+                                </div>
+                                <a class="entry__more-link" href="{{ path('homepage_post_show', {'id': post.id}) }}">Show
+                                    More</a>
+                            </div> <!-- end entry__text -->
+
+                        </article>
+
+                    {% endfor %}
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="column large-12">
+                    <div class="pgn">
+                        {{ knp_pagination_render(posts) }}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+    {% endblock %}

@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <!-- content
+       ================================================== -->
+
+
+    <section class="s-content">
+
+        <div class="row">
+            <div class="column large-12">
+
+                <article class="s-content__entry">
+
+                    <div class="s-content__media">
+                        {% if page and (page.featuredImage) %}
+                        <img src=" {{ vich_uploader_asset(page,'imageFile') | imagine_filter('featured_image') }}"
+                              alt="{{ page.title }}">
+                        {% endif %}
+                    </div> <!-- end s-content__media -->
+
+
+                    <div class="s-content__entry-header">
+                        {% if page is not null %}
+                        <h1 class="s-content__title">{{ page.title }}</h1>
+                        {% endif %}
+                    </div> <!-- end s-content__entry-header -->
+
+                    <div class="s-content__primary">
+
+                        <div class="s-content__page-content" style="width: 100%">
+
+                            {% if page is not null %}
+
+                                {{ page.content | raw}}
+
+                            {% endif %}
+
+                            <form name="cForm" id="cForm" class="s-content__form" method="POST" action="{{ path('homepage_contact') }}">
+                                <fieldset>
+
+                                    <div class="form-field">
+                                        <input name="name" type="text" id="name" class="h-full-width h-remove-bottom"
+                                               placeholder="Your Name" value="{{ name }}">
+                                    </div>
+
+                                    <div class="form-field">
+                                        <input name="email" type="text" id="email"
+                                               class="h-full-width h-remove-bottom" placeholder="Your Email" value="{{ email }}">
+                                    </div>
+
+                                    <div class="form-field">
+                                        <input name="website" type="text" id="website"
+                                               class="h-full-width h-remove-bottom" placeholder="Website" value="{{ website }}">
+                                    </div>
+
+                                    <div class="form-field">
+                                        <textarea name="content" id="content" class="h-full-width"
+                                                  placeholder="Your Message"></textarea>
+                                    </div>
+
+                                    <br>
+                                    <button type="submit" class="submit btn btn--primary h-full-width">Submit</button>
+
+                                </fieldset>
+                            </form> <!-- end form -->
+
+                        </div> <!-- end s-entry__page-content -->
+
+                    </div> <!-- end s-content__primary -->
+                </article> <!-- end entry -->
+
+            </div> <!-- end column -->
+        </div> <!-- end row -->
+
+    </section> <!-- end s-content -->
+{% endblock %}

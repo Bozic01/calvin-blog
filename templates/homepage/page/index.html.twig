@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <body id="top" data-aos-easing="ease-in-out" data-aos-duration="800" data-aos-delay="400">
+
+    <!-- preloader
+    ================================================== -->
+    <div id="preloader" style="display: none;">
+        <div id="loader"></div>
+    </div>
+
+    <!-- content
+    ================================================== -->
+
+    <section class="s-content">
+
+        <div class="row">
+            <div class="column large-12">
+
+                <article class="s-content__entry format-standard">
+
+                    <div class="s-content__media">
+                        <div class="s-content__post-thumb">
+                            {% if (page.featuredImage) %}
+                                <img src=" {{ vich_uploader_asset(page,'imageFile') | imagine_filter('featured_image') }}"
+                                     alt="{{ page.title }}">
+                            {% endif %}
+                        </div>
+                    </div> <!-- end s-content__media -->
+
+                    <div class="s-content__entry-header">
+                        <h1 class="s-content__title s-content__title--post">{{ page.title }}</h1>
+                    </div> <!-- end s-content__entry-header -->
+
+                    <div class="s-content__primary">
+
+                        <div class="s-content__page-content">
+
+                            <p>
+                                {{ page.content | raw }}
+                            </p>
+
+                        </div> <!-- end s-entry__entry-content -->
+
+                    </div> <!-- end s-content__primary -->
+                </article> <!-- end entry -->
+
+            </div> <!-- end column -->
+        </div> <!-- end row -->
+
+    </section> <!-- end s-content -->
+
+    </body>
+
+{% endblock %}

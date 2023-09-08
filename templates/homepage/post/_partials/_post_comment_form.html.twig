@@ -1,0 +1,41 @@
+<div class="row comment-respond">
+
+    <!-- START respond -->
+    <div id="respond" class="column">
+
+        <h3>
+            Add Comment
+            {% if (app.user is null) %}
+                <span>
+                    You have to be <a
+                            href="{{ path('app_login') }}?redirect={{post.id}}">logged in</a> order to comment.
+                </span>
+            {% endif %}
+        </h3>
+
+        {% if (app.user) %}
+            <form name="contactForm" id="contactForm" method="POST" action="{{ path('homepage_post_comment_new', {id: post.id}) }}" autocomplete="off">
+                <fieldset>
+                    <input type="hidden" name="parentCommentId" id="parent-comment-id" value="" />
+                    {% include '_partials/homepage/_homepage_flash_messages.html.twig' %}
+                    <div class="message form-field">
+                        <label for="cMessage">Write your comment</label>
+                        <textarea
+                                name="cMessage"
+                                id="cMessage"
+                                class="h-full-width"
+                                placeholder="Your Message"></textarea>
+                    </div>
+
+                    <br>
+                    <input name="submit" class="btn btn--primary btn-wide btn--large h-full-width"
+                           value="Add Comment" type="submit">
+
+                </fieldset>
+            </form> <!-- end form -->
+        {% endif %}
+
+    </div>
+    <!-- END respond-->
+
+</div> <!-- end comment-respond -->
