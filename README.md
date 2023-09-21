@@ -1,29 +1,11 @@
 # README #
 
-This README would normally document whatever steps are necessary to get your application up and running.
+# Calvin Blog Application #
 
-### What is this repository for? ###
+### Install Symfony MVC Application
+1. Clone project using git
+2. Copy `.env.test` into `.env` and configure database credentials
+3. Navigate to the project's root directory using terminal
+4. Run `composer install`
+5. Start local server by executing `symfony server:start`
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
-
-### How do I get set up? ###
-
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
-
-### Contribution guidelines ###
-
-* Writing tests
-* Code review
-* Other guidelines
-
-### Who do I talk to? ###
-
-* Repo owner or admin
-* Other community or team contact
